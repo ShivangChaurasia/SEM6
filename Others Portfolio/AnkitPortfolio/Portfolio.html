@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ankit Raj | Cybersecurity & Dev Portfolio</title>
+    <meta name="description" content="Portfolio of Ankit Raj - Computer Science Engineer & Cybersecurity Enthusiast">
+    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/2720/2720697.png">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['Space Mono', 'monospace'],
+                    },
+                    colors: {
+                        cyber: {
+                            primary: '#06b6d4', // Cyan
+                            secondary: '#10b981', // Emerald
+                            dark: '#0f172a', // Slate 900
+                            darker: '#020617', // Slate 950
+                        }
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        body { font-family: 'Inter', sans-serif; overflow-x: hidden; }
+        h1, h2, h3, h4, .font-mono { font-family: 'Space Mono', monospace; }
+        #canvas-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; opacity: 0.6;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+        .dark .glass-card {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(6, 182, 212, 0.15);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+        .floating-nav {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border-radius: 9999px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        .dark .floating-nav {
+            background: rgba(2, 6, 23, 0.85);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #06b6d4; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #0891b2; }
+        .text-gradient {
+            background: linear-gradient(135deg, #06b6d4 0%, #10b981 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-slate-800 dark:bg-cyber-darker dark:text-gray-300 transition-colors duration-300 selection:bg-cyber-primary selection:text-white">
+
+    <canvas id="canvas-bg" class="transition-opacity duration-500"></canvas>
+
+    <div class="fixed top-6 left-0 right-0 z-50 flex justify-center px-4">
+        <nav class="floating-nav px-6 py-3 flex items-center justify-between w-full max-w-4xl transition-all duration-300">
+            <a href="#" class="text-xl font-bold tracking-tighter flex items-center gap-2 group">
+                <span class="text-cyber-primary font-mono group-hover:animate-pulse">&lt;AR/&gt;</span>
+            </a>
+
+            <div class="hidden md:flex items-center gap-8 text-sm font-semibold font-mono">
+                <a href="#about" class="hover:text-cyber-primary transition-colors">ABOUT</a>
+                <a href="#skills" class="hover:text-cyber-primary transition-colors">SKILLS</a>
+                <a href="#projects" class="hover:text-cyber-primary transition-colors">PROJECTS</a>
+                <a href="#education" class="hover:text-cyber-primary transition-colors">EDU</a>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <button id="theme-toggle" class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-gray-100 dark:hover:bg-white/10 transition">
+                    <i class="fas fa-moon text-slate-600 dark:text-yellow-400"></i>
+                </button>
+                <button id="mobile-menu-btn" class="md:hidden text-lg">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </nav>
+    </div>
+
+    <div id="mobile-menu" class="fixed inset-0 z-40 bg-white/95 dark:bg-cyber-darker/95 backdrop-blur-xl transform translate-x-full transition-transform duration-300 flex flex-col items-center justify-center gap-8 text-2xl font-mono font-bold">
+        <button id="close-menu-btn" class="absolute top-8 right-8 text-3xl text-cyber-primary"><i class="fas fa-times"></i></button>
+        <a href="#about" class="hover:text-cyber-primary" onclick="toggleMenu()">ABOUT</a>
+        <a href="#skills" class="hover:text-cyber-primary" onclick="toggleMenu()">SKILLS</a>
+        <a href="#projects" class="hover:text-cyber-primary" onclick="toggleMenu()">PROJECTS</a>
+        <a href="#education" class="hover:text-cyber-primary" onclick="toggleMenu()">EDUCATION</a>
+    </div>
+
+    <section class="min-h-screen flex items-center justify-center pt-24 pb-12 px-4">
+        <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center w-full">
+            
+            <div data-aos="fade-right" class="order-2 md:order-1 text-center md:text-left">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyber-primary/30 bg-cyber-primary/10 text-cyber-primary text-xs font-mono font-bold mb-6">
+                    <i class="fas fa-circle text-[10px] animate-pulse"></i> OPEN TO WORK
+                </div>
+                
+                <h1 class="text-5xl md:text-7xl font-bold leading-none tracking-tight mb-4">
+                    ANKIT <span class="text-gradient">RAJ</span>
+                </h1>
+                
+                <div class="h-8 mb-6 font-mono text-lg md:text-xl text-cyber-secondary">
+                    <span id="typewriter"></span><span class="animate-pulse">_</span>
+                </div>
+
+                <p class="text-gray-600 dark:text-gray-400 text-lg mb-8 max-w-lg mx-auto md:mx-0 leading-relaxed">
+                    Engineering secure digital environments and building robust software solutions. Specialized in <span class="text-cyber-primary font-semibold">C++</span>, <span class="text-cyber-primary font-semibold">Cybersecurity</span>, and <span class="text-cyber-primary font-semibold">AI Integration</span>.
+                </p>
+
+                <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+
+                    <div class="flex gap-4 items-center justify-center">
+                        <a href="https://github.com/Ankit4629/" target="_blank" class="w-12 h-12 rounded-lg border border-gray-300 dark:border-gray-700 flex items-center justify-center text-xl hover:border-cyber-primary hover:text-cyber-primary transition-colors bg-white dark:bg-white/5"><i class="fab fa-github"></i></a>
+                        <a href="https://www.linkedin.com/in/ankit-raj-ar18/" target="_blank" class="w-12 h-12 rounded-lg border border-gray-300 dark:border-gray-700 flex items-center justify-center text-xl hover:border-cyber-primary hover:text-cyber-primary transition-colors bg-white dark:bg-white/5"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="mailto:ankitaj4629@gmail.com" class="w-12 h-12 rounded-lg border border-gray-300 dark:border-gray-700 flex items-center justify-center text-xl hover:border-cyber-primary hover:text-cyber-primary transition-colors bg-white dark:bg-white/5"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div data-aos="fade-left" class="order-1 md:order-2 flex justify-center relative items-center">
+                <div class="absolute w-[80%] h-[80%] bg-gradient-to-tr from-cyan-500/30 to-emerald-500/30 blur-[100px] rounded-full animate-pulse"></div>
+                <div class="relative z-10 w-full max-w-[550px] drop-shadow-[0_0_30px_rgba(6,182,212,0.3)]">
+                    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+                    <lottie-player 
+                        src="websites.json" 
+                        background="transparent" 
+                        speed="1" 
+                        style="width: 100%; height: auto;" 
+                        loop 
+                        autoplay>
+                    </lottie-player>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="py-20">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="glass-card rounded-2xl overflow-hidden p-0" data-aos="fade-up">
+                <div class="bg-gray-100 dark:bg-slate-800 px-4 py-2 flex items-center gap-2 border-b border-gray-200 dark:border-gray-700">
+                    <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                    <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                    <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                    <span class="ml-2 text-xs font-mono text-gray-500">user@ankit-raj:~/about-me</span>
+                </div>
+                
+                <div class="p-8 md:p-12 grid md:grid-cols-3 gap-10 items-center">
+                    <div class="col-span-1 relative">
+                        <div class="absolute inset-0 bg-cyber-primary rounded-xl translate-x-2 translate-y-2"></div>
+                        <img src="Ankit_photo.jpeg" onerror="this.src='https://ui-avatars.com/api/?name=Ankit+Raj&background=06b6d4&color=fff&size=256'" alt="Ankit Raj" class="relative rounded-xl grayscale hover:grayscale-0 transition-all duration-500 w-full object-cover shadow-xl border-2 border-gray-900 dark:border-white">
+                    </div>
+
+                    <div class="col-span-2 space-y-4">
+                        <h2 class="text-3xl font-bold mb-4">Hello, World! <span class="text-cyber-secondary">👋</span></h2>
+                        <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
+                            I am a B.Tech Computer Science student at <strong class="text-cyber-primary">Lovely Professional University</strong> (2023-2027) with a passion for decoding the digital world. I focus on secure coding practices, algorithm design, and system resilience.
+                        </p>
+                        <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
+                            My technical journey spans across <strong class="text-white bg-slate-800 px-1 rounded">Cybersecurity</strong> (Forensics, MITRE ATT&CK) and <strong class="text-white bg-slate-800 px-1 rounded">Full Stack Development</strong>. I actively participate in hackathons and CTFs to sharpen my problem-solving skills.
+                        </p>
+                        
+                        <div class="grid grid-cols-2 gap-4 pt-4">
+                            <div class="border-l-4 border-cyber-primary pl-4">
+                                <h4 class="font-bold text-lg">Developer</h4>
+                                <p class="text-sm text-gray-500">C++, Python, Web Stack</p>
+                            </div>
+                            <div class="border-l-4 border-cyber-secondary pl-4">
+                                <h4 class="font-bold text-lg">Security</h4>
+                                <p class="text-sm text-gray-500">Forensics, NetSec, NIST</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills" class="py-20 relative">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <span class="text-cyber-primary font-mono text-sm tracking-widest">CAPABILITIES</span>
+                <h2 class="text-4xl font-bold mt-2">Technical Arsenal</h2>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="glass-card p-8 rounded-xl hover:-translate-y-2 transition-transform duration-300 group" data-aos="fade-up" data-aos-delay="0">
+                    <div class="w-14 h-14 bg-blue-500/10 rounded-lg flex items-center justify-center text-3xl text-blue-500 mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 font-mono border-b border-gray-200 dark:border-gray-700 pb-2">Languages</h3>
+                    <ul class="space-y-2 font-mono text-sm text-gray-600 dark:text-gray-400">
+                        <li class="flex items-center gap-2"><i class="fab fa-python text-yellow-500"></i> Python</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-copyright text-blue-600"></i> C / C++</li>
+                        <li class="flex items-center gap-2"><i class="fab fa-java text-red-500"></i> Java</li>
+                        <li class="flex items-center gap-2"><i class="fab fa-js text-yellow-400"></i> JavaScript</li>
+                    </ul>
+                </div>
+
+                <div class="glass-card p-8 rounded-xl hover:-translate-y-2 transition-transform duration-300 group" data-aos="fade-up" data-aos-delay="100">
+                    <div class="w-14 h-14 bg-red-500/10 rounded-lg flex items-center justify-center text-3xl text-red-500 mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 font-mono border-b border-gray-200 dark:border-gray-700 pb-2">Cybersecurity</h3>
+                    <ul class="space-y-2 font-mono text-sm text-gray-600 dark:text-gray-400">
+                        <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-red-500 rounded-full"></span> MITRE ATT&CK</li>
+                        <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-red-500 rounded-full"></span> NIST Framework</li>
+                        <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-red-500 rounded-full"></span> Volatility Framework</li>
+                        <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-red-500 rounded-full"></span> Windows Forensics</li>
+                    </ul>
+                </div>
+
+                <div class="glass-card p-8 rounded-xl hover:-translate-y-2 transition-transform duration-300 group" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-14 h-14 bg-green-500/10 rounded-lg flex items-center justify-center text-3xl text-green-500 mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 font-mono border-b border-gray-200 dark:border-gray-700 pb-2">Tools & Platforms</h3>
+                    <ul class="space-y-2 font-mono text-sm text-gray-600 dark:text-gray-400">
+                        <li class="flex items-center gap-2"><i class="fas fa-database"></i> MySQL & SIEM</li>
+                        <li class="flex items-center gap-2"><i class="fab fa-linux"></i> Linux & Wireshark</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-network-wired"></i> Nmap</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-search"></i> FTK Imager</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="py-20 bg-gray-100/50 dark:bg-black/20">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-12" data-aos="fade-right">
+                <div>
+                    <span class="text-cyber-primary font-mono text-sm tracking-widest">PORTFOLIO</span>
+                    <h2 class="text-4xl font-bold mt-2">Featured Projects</h2>
+                </div>
+                <div class="hidden md:block w-32 h-1 bg-gradient-to-r from-cyber-primary to-transparent rounded"></div>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-8">
+                <div class="group relative rounded-2xl overflow-hidden shadow-2xl" data-aos="zoom-in">
+                    <div class="absolute inset-0 bg-gradient-to-br from-cyber-dark to-slate-900 z-0"></div>
+                    
+                    <div class="relative z-10 p-8 h-full flex flex-col">
+                        <div class="flex justify-between items-start mb-6">
+                            <div class="p-3 bg-cyber-primary/20 rounded-lg text-cyber-primary">
+                                <i class="fas fa-briefcase text-2xl"></i>
+                            </div>
+                            <span class="text-xs font-mono text-gray-500">DEC 2025</span>
+                        </div>
+                        
+                        <h3 class="text-2xl font-bold text-white mb-3 group-hover:text-cyber-primary transition-colors">Smart Internship Tracker</h3>
+                        <p class="text-gray-400 text-sm mb-6 flex-grow leading-relaxed">
+                            A smart web application to organize and manage internship applications. Features a dashboard to track total applications, interviews, and offers in real-time. Categorizes applications into stages for efficient workflow.
+                        </p>
+                        
+                        <div class="flex flex-wrap gap-2 mt-auto">
+                            <span class="px-3 py-1 bg-white/10 text-white text-xs font-mono rounded">Web Dev</span>
+                            <span class="px-3 py-1 bg-white/10 text-white text-xs font-mono rounded">Dashboard</span>
+                            <span class="px-3 py-1 bg-white/10 text-white text-xs font-mono rounded">Real-time</span>
+                            <a href="https://smart-internship-tracker.vercel.app/" target="_blank"><button class="px-3 py-1 mt-10px bg-purple-300 text-black text-xs font-mono rounded">Live Demo</button></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="group relative rounded-2xl overflow-hidden shadow-2xl" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="absolute inset-0 bg-gradient-to-br from-cyber-dark to-slate-900 z-0"></div>
+                    
+                    <div class="relative z-10 p-8 h-full flex flex-col">
+                        <div class="flex justify-between items-start mb-6">
+                            <div class="p-3 bg-purple-500/20 rounded-lg text-purple-400">
+                                <i class="fas fa-utensils text-2xl"></i>
+                            </div>
+                            <span class="text-xs font-mono text-gray-500">MAR 2025</span>
+                        </div>
+                        
+                        <h3 class="text-2xl font-bold text-white mb-3 group-hover:text-purple-400 transition-colors">AI Meal Plan Generator</h3>
+                        <p class="text-gray-400 text-sm mb-6 flex-grow leading-relaxed">
+                            Developed an AI-powered meal plan generator creating personalized diet plans based on age, weight, and goals. Implements logic-based recommendations (ML/Rule-based) for nutritionally balanced meal suggestions.
+                        </p>
+                        
+                        <div class="flex flex-wrap gap-2 mt-auto">
+                            <span class="px-3 py-1 bg-white/10 text-white text-xs font-mono rounded">Python</span>
+                            <span class="px-3 py-1 bg-white/10 text-white text-xs font-mono rounded">ML Logic</span>
+                            <span class="px-3 py-1 bg-white/10 text-white text-xs font-mono rounded">Backend</span>
+                            <a href="https://github.com/Ankit4629/AI-Custom-Meal-Plan-Generator" target="_blank"><button class="px-3 py-1 mt-10px bg-purple-300 text-black text-xs font-mono rounded">View Details</button></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="education" class="py-20">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="grid md:grid-cols-2 gap-16">
+                
+                <div data-aos="fade-right">
+                    <h3 class="text-2xl font-bold mb-8 flex items-center gap-2">
+                        <i class="fas fa-graduation-cap text-cyber-primary"></i> Education History
+                    </h3>
+                    <div class="relative border-l border-gray-300 dark:border-gray-700 ml-3 space-y-10">
+                        <div class="pl-8 relative group">
+                            <div class="absolute -left-[5px] top-1 w-2.5 h-2.5 rounded-full bg-cyber-primary group-hover:scale-150 transition-transform"></div>
+                            <h4 class="text-lg font-bold">Lovely Professional University</h4>
+                            <div class="flex justify-between items-center text-sm font-mono text-gray-500 dark:text-gray-400 mt-1">
+                                <span>B.Tech CSE</span>
+                                <span>2023 - 2027</span>
+                            </div>
+                            <div class="mt-2 inline-block px-2 py-1 bg-cyber-primary/10 text-cyber-primary text-xs font-bold rounded">CGPA: 6.67</div>
+                            <div class="mt-1 text-xs text-gray-500">Punjab, India</div>
+                        </div>
+                        <div class="pl-8 relative group">
+                            <div class="absolute -left-[5px] top-1 w-2.5 h-2.5 rounded-full bg-gray-400 dark:bg-gray-600 group-hover:bg-cyber-primary transition-colors"></div>
+                            <h4 class="text-lg font-bold">BVN Public School</h4>
+                            <p class="text-sm text-gray-600 dark:text-gray-300">Intermediate (12th)</p>
+                            <p class="text-xs font-mono text-gray-500 mt-1">Jehanabad, Bihar | 76%</p>
+                            <p class="text-[10px] text-gray-400">Apr 2020 - Mar 2021</p>
+                        </div>
+                        <div class="pl-8 relative group">
+                            <div class="absolute -left-[5px] top-1 w-2.5 h-2.5 rounded-full bg-gray-400 dark:bg-gray-600 group-hover:bg-cyber-primary transition-colors"></div>
+                            <h4 class="text-lg font-bold">DAV Public School</h4>
+                            <p class="text-sm text-gray-600 dark:text-gray-300">Matriculation (10th)</p>
+                            <p class="text-xs font-mono text-gray-500 mt-1">Jehanabad, Bihar | 91%</p>
+                            <p class="text-[10px] text-gray-400">Apr 2019 - Mar 2020</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div data-aos="fade-left">
+                    <h3 class="text-2xl font-bold mb-8 flex items-center gap-2">
+                        <i class="fas fa-trophy text-yellow-500"></i> Recognition
+                    </h3>
+                    
+                    <div class="space-y-4">
+                        <div class="glass-card p-4 rounded-lg flex gap-4 items-center">
+                            <div class="text-3xl text-yellow-500"><i class="fas fa-medal"></i></div>
+                            <div>
+                                <h4 class="font-bold">2nd Rank - CodeAHunt</h4>
+                                <p class="text-sm text-gray-500 font-mono">Hackathon • Jan 2025</p>
+                            </div>
+                        </div>
+
+                        <div class="glass-card p-4 rounded-lg flex gap-4 items-center">
+                            <div class="text-3xl text-green-500"><i class="fas fa-globe-asia"></i></div>
+                            <div>
+                                <h4 class="font-bold">Global Rank 254</h4>
+                                <p class="text-sm text-gray-500 font-mono">HackTheBox Contest 96 (Top 1%)</p>
+                            </div>
+                        </div>
+
+                        <div class="mt-10">
+                            <h4 class="text-sm font-mono font-bold text-gray-500 mb-5 flex items-center gap-2 tracking-widest">
+                                <span class="text-cyber-primary"></span> CERTIFICATIONS
+                            </h4>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+
+                                <a href="https://www.linkedin.com/posts/ankit-raj-ar18_nptel-certificate-activity-7427412620867010560-J0lp?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEfp6XkBcHfSsQTordag__-einJ26M3R4Gw" target="_blank">
+                                <div class="group flex items-center gap-3 p-3 rounded-lg border border-gray-200 dark:border-gray-700 bg-white/50 dark:bg-slate-800/50 hover:border-cyber-primary/50 transition-all duration-300">
+                                    <div class="w-10 h-10 rounded bg-gray-100 dark:bg-slate-700 flex items-center justify-center text-gray-500 group-hover:text-cyber-primary transition-colors"><i class="fas fa-cloud"></i></div>
+                                    <div>
+                                        <h5 class="font-bold text-sm leading-tight">Cloud Computing</h5>
+                                        <p class="text-[10px] font-mono text-gray-500">NPTEL • Aug 2025</p>
+                                    </div>
+                                </div>
+                                </a>
+
+                                <a href="https://www.linkedin.com/posts/ankit-raj-ar18_certificate-activity-7427415236976160768-7yuM?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEfp6XkBcHfSsQTordag__-einJ26M3R4Gw" target="_blank">
+                                <div class="group flex items-center gap-3 p-3 rounded-lg border border-gray-200 dark:border-gray-700 bg-white/50 dark:bg-slate-800/50 hover:border-cyber-primary/50 transition-all duration-300">
+                                    <div class="w-10 h-10 rounded bg-gray-100 dark:bg-slate-700 flex items-center justify-center text-gray-500 group-hover:text-cyber-primary transition-colors"><i class="fas fa-robot"></i></div>
+                                    <div>
+                                        <h5 class="font-bold text-sm leading-tight">Master GenAI</h5>
+                                        <p class="text-[10px] font-mono text-gray-500">Udemy • Sep 2025</p>
+                                    </div>
+                                </div>
+                                </a>
+                                
+
+                                <a href="https://www.linkedin.com/posts/ankit-raj-ar18_certificate-activity-7427415236976160768-7yuM?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEfp6XkBcHfSsQTordag__-einJ26M3R4Gw" target="_blank">
+                                <div class="group flex items-center gap-3 p-3 rounded-lg border border-gray-200 dark:border-gray-700 bg-white/50 dark:bg-slate-800/50 hover:border-cyber-primary/50 transition-all duration-300">
+                                    <div class="w-10 h-10 rounded bg-gray-100 dark:bg-slate-700 flex items-center justify-center text-gray-500 group-hover:text-cyber-primary transition-colors"><i class="fas fa-project-diagram"></i></div>
+                                    <div>
+                                        <h5 class="font-bold text-sm leading-tight">Automata</h5>
+                                        <p class="text-[10px] font-mono text-gray-500">Coursera • Sep 2025</p>
+                                    </div>
+                                </div>
+                                </a>
+                                
+
+                                <a href="https://www.linkedin.com/posts/ankit-raj-ar18_certificate-activity-7427415236976160768-7yuM?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEfp6XkBcHfSsQTordag__-einJ26M3R4Gw" target="_blank">
+                                <div class="group flex items-center gap-3 p-3 rounded-lg border border-gray-200 dark:border-gray-700 bg-white/50 dark:bg-slate-800/50 hover:border-cyber-primary/50 transition-all duration-300">
+                                    <div class="w-10 h-10 rounded bg-gray-100 dark:bg-slate-700 flex items-center justify-center text-gray-500 group-hover:text-cyber-primary transition-colors"><i class="fas fa-comment-dots"></i></div>
+                                    <div>
+                                        <h5 class="font-bold text-sm leading-tight">Prompt Eng.</h5>
+                                        <p class="text-[10px] font-mono text-gray-500">Infosys • Oct 2025</p>
+                                    </div>
+                                </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-white dark:bg-black border-t border-gray-200 dark:border-gray-800 py-12">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="text-center md:text-left">
+                <h2 class="text-2xl font-bold font-mono tracking-tighter mb-1">ANKIT RAJ</h2>
+                <p class="text-sm text-gray-500">Securing the future, one line of code at a time.</p>
+            </div>
+            
+            <div class="flex gap-6">
+                <a href="Ankit_CV.pdf" download class="group relative px-8 py-3 bg-cyber-primary text-white font-bold rounded-lg overflow-hidden shadow-lg shadow-cyber-primary/25 transition-all hover:scale-105">
+                    <div class="absolute inset-0 w-full h-full bg-white/20 group-hover:translate-x-full transition-transform duration-500 ease-out -skew-x-12 -translate-x-full"></div>
+                    <span class="relative flex items-center gap-2"><i class="fas fa-download"></i> DOWNLOAD RESUME</span>
+                </a>
+                <a href="https://github.com/Ankit4629/" target="_blank" class="text-2xl text-gray-400 hover:text-cyber-primary transition-colors"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/ankit-raj-ar18/" target="_blank" class="text-2xl text-gray-400 hover:text-cyber-primary transition-colors"><i class="fab fa-linkedin"></i></a>
+                <a href="mailto:ankitaj4629@gmail.com" class="text-2xl text-gray-400 hover:text-cyber-primary transition-colors"><i class="fas fa-envelope"></i></a>
+            </div>
+        </div>
+        <div class="text-center mt-8 text-xs font-mono text-gray-600 dark:text-gray-500">
+            &copy; 2025 Ankit Raj. <span class="text-cyber-primary">ankitaj4629@gmail.com</span>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // 1. Initialize AOS
+        AOS.init({ duration: 800, once: true });
+
+        // 2. Typewriter Effect
+        const typeText = ["Software Engineer", "Cybersecurity Enthusiast", "Problem Solver"];
+        let count = 0;
+        let index = 0;
+        let currentText = "";
+        let letter = "";
+
+        (function type() {
+            if (count === typeText.length) { count = 0; }
+            currentText = typeText[count];
+            letter = currentText.slice(0, ++index);
+
+            document.getElementById("typewriter").textContent = letter;
+            if (letter.length === currentText.length) {
+                count++;
+                index = 0;
+                setTimeout(type, 2000); 
+            } else {
+                setTimeout(type, 100); 
+            }
+        }());
+
+        // 3. Canvas Particle Network Animation
+        const canvas = document.getElementById('canvas-bg');
+        const ctx = canvas.getContext('2d');
+        let particlesArray;
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            init();
+        });
+
+        const mouse = { x: null, y: null, radius: 150 };
+
+        window.addEventListener('mousemove', (event) => {
+            mouse.x = event.x;
+            mouse.y = event.y;
+        });
+
+        class Particle {
+            constructor(x, y, directionX, directionY, size, color) {
+                this.x = x;
+                this.y = y;
+                this.directionX = directionX;
+                this.directionY = directionY;
+                this.size = size;
+                this.color = color;
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
+                ctx.fillStyle = document.documentElement.classList.contains('dark') ? '#06b6d4' : '#64748b';
+                ctx.fill();
+            }
+            update() {
+                if (this.x > canvas.width || this.x < 0) this.directionX = -this.directionX;
+                if (this.y > canvas.height || this.y < 0) this.directionY = -this.directionY;
+
+                let dx = mouse.x - this.x;
+                let dy = mouse.y - this.y;
+                let distance = Math.sqrt(dx*dx + dy*dy);
+                if (distance < mouse.radius + this.size) {
+                    if (mouse.x < this.x && this.x < canvas.width - this.size * 10) this.x += 2;
+                    if (mouse.x > this.x && this.x > this.size * 10) this.x -= 2;
+                    if (mouse.y < this.y && this.y < canvas.height - this.size * 10) this.y += 2;
+                    if (mouse.y > this.y && this.y > this.size * 10) this.y -= 2;
+                }
+
+                this.x += this.directionX;
+                this.y += this.directionY;
+                this.draw();
+            }
+        }
+
+        function init() {
+            particlesArray = [];
+            let numberOfParticles = (canvas.width * canvas.height) / 12000; 
+            for (let i = 0; i < numberOfParticles; i++) {
+                let size = (Math.random() * 2) + 1;
+                let x = (Math.random() * ((innerWidth - size * 2) - (size * 2)) + size * 2);
+                let y = (Math.random() * ((innerHeight - size * 2) - (size * 2)) + size * 2);
+                let directionX = (Math.random() * 2) - 1; 
+                let directionY = (Math.random() * 2) - 1;
+                let color = '#06b6d4';
+                particlesArray.push(new Particle(x, y, directionX, directionY, size, color));
+            }
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            ctx.clearRect(0, 0, innerWidth, innerHeight);
+            
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+            }
+            connect();
+        }
+
+        function connect() {
+            let opacityValue = 1;
+            for (let a = 0; a < particlesArray.length; a++) {
+                for (let b = a; b < particlesArray.length; b++) {
+                    let distance = ((particlesArray[a].x - particlesArray[b].x) * (particlesArray[a].x - particlesArray[b].x)) + 
+                                   ((particlesArray[a].y - particlesArray[b].y) * (particlesArray[a].y - particlesArray[b].y));
+                    if (distance < (canvas.width/9) * (canvas.height/9)) {
+                        opacityValue = 1 - (distance/15000);
+                        let isDark = document.documentElement.classList.contains('dark');
+                        ctx.strokeStyle = isDark ? `rgba(6, 182, 212, ${opacityValue})` : `rgba(100, 116, 139, ${opacityValue})`;
+                        ctx.lineWidth = 1;
+                        ctx.beginPath();
+                        ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
+                        ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        init();
+        animate();
+
+        // 4. Dark Mode Logic
+        const toggleBtn = document.getElementById('theme-toggle');
+        const html = document.documentElement;
+        
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            html.classList.add('dark');
+            toggleBtn.innerHTML = '<i class="fas fa-sun text-yellow-400"></i>';
+        } else {
+            html.classList.remove('dark');
+            toggleBtn.innerHTML = '<i class="fas fa-moon text-slate-600"></i>';
+        }
+
+        toggleBtn.addEventListener('click', () => {
+            html.classList.toggle('dark');
+            if (html.classList.contains('dark')) {
+                localStorage.theme = 'dark';
+                toggleBtn.innerHTML = '<i class="fas fa-sun text-yellow-400"></i>';
+            } else {
+                localStorage.theme = 'light';
+                toggleBtn.innerHTML = '<i class="fas fa-moon text-slate-600"></i>';
+            }
+        });
+
+        // 5. Mobile Menu
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const closeMenuBtn = document.getElementById('close-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        function toggleMenu() {
+            mobileMenu.classList.toggle('translate-x-full');
+        }
+
+        menuBtn.addEventListener('click', toggleMenu);
+        closeMenuBtn.addEventListener('click', toggleMenu);
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aditya Aman | Portfolio</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👨‍💻</text></svg>">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',
+                        secondary: '#10B981',
+                        darkBg: '#0f172a',
+                        cardDark: '#1e293b',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1e293b;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #3b82f6;
+            border-radius: 5px;
+        }
+
+        /* Dynamic Background Canvas */
+        #canvas-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            transition: opacity 0.5s ease;
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .dark .glass-card {
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 dark:bg-darkBg dark:text-gray-200 transition-colors duration-300 relative overflow-x-hidden">
+
+    <canvas id="canvas-bg"></canvas>
+
+    <nav class="fixed w-full z-50 top-0 start-0 border-b border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-darkBg/80 backdrop-blur-md">
+        <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+            <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
+                <span class="self-center text-2xl font-bold whitespace-nowrap text-primary dark:text-white">&lt;Aditya/&gt;</span>
+            </a>
+            <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse items-center gap-4">
+                <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition">
+                    <i id="theme-icon" class="fas fa-moon text-xl"></i>
+                </button>
+                <a href="Aditya_CV.pdf" download class="text-white bg-primary hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-primary dark:hover:bg-blue-600 dark:focus:ring-blue-800 transition shadow-lg">
+                    Download CV <i class="fas fa-download ml-2"></i>
+                </a>
+                <button data-collapse-toggle="navbar-sticky" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-sticky" aria-expanded="false">
+                    <span class="sr-only">Open main menu</span>
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+            <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
+                <ul class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 dark:border-gray-700">
+                    <li><a href="#home" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-primary md:p-0 dark:text-white dark:hover:text-primary transition">Home</a></li>
+                    <li><a href="#about" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-primary md:p-0 dark:text-white dark:hover:text-primary transition">About</a></li>
+                    <li><a href="#skills" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-primary md:p-0 dark:text-white dark:hover:text-primary transition">Skills</a></li>
+                    <li><a href="#projects" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-primary md:p-0 dark:text-white dark:hover:text-primary transition">Projects</a></li>
+                    <li><a href="#contact" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-primary md:p-0 dark:text-white dark:hover:text-primary transition">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section id="home" class="min-h-screen flex items-center pt-20 px-4">
+        <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-8 items-center">
+            <div class="space-y-6 animate-fade-in-left">
+                <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">Software Developer & Designer</span>
+                <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight">
+                    Hi, I'm <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-purple-600">Aditya Aman</span>
+                </h1>
+                <p class="text-lg text-gray-600 dark:text-gray-300">
+                    A B.Tech CSE Student passionate about building AI-powered applications, solving complex algorithmic problems, and creating stunning visual content.
+                </p>
+                <div class="flex flex-wrap gap-4">
+                    <a href="#contact" class="px-6 py-3 bg-gray-900 text-white dark:bg-white dark:text-gray-900 rounded-lg font-semibold hover:opacity-90 transition">
+                        Hire Me
+                    </a>
+                    <a href="https://github.com/aditya92aman" target="_blank" class="px-6 py-3 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition flex items-center gap-2">
+                        <i class="fab fa-github"></i> GitHub
+                    </a>
+                    <a href="http://www.linkedin.com/in/aditya=aman28" target="_blank" class="px-6 py-3 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20 transition flex items-center gap-2 text-blue-600">
+                        <i class="fab fa-linkedin"></i> LinkedIn
+                    </a>
+                </div>
+            </div>
+            <div class="relative flex justify-center items-center">
+                <lottie-player src="https://assets2.lottiefiles.com/packages/lf20_w51pcehl.json"  background="transparent"  speed="1"  style="width: 100%; max-width: 500px; height: auto;"  loop  autoplay></lottie-player>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="py-20 px-4">
+        <div class="max-w-6xl mx-auto glass-card rounded-2xl p-8 md:p-12">
+            <h2 class="text-3xl font-bold mb-8 text-center"><span class="border-b-4 border-primary pb-2">About Me</span></h2>
+            <div class="grid md:grid-cols-2 gap-10">
+                <div>
+                    <h3 class="text-xl font-semibold mb-4 text-primary">Who am I?</h3>
+                    <p class="text-gray-600 dark:text-gray-300 mb-4 leading-relaxed">
+                        I am currently pursuing a **Bachelor of Technology in Computer Science and Engineering** at Lovely Professional University. I am a quick learner and a team player with a knack for adaptability and project management.
+                    </p>
+                    <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
+                        My technical journey involves advanced Data Structures & Algorithms, Full Stack Development, and AI integration. Beyond code, I have a creative side, proficient in video editing and motion graphics using tools like Adobe Premiere Pro and Blender.
+                    </p>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="p-4 bg-white dark:bg-gray-800 rounded-xl shadow-sm text-center">
+                        <i class="fas fa-code text-3xl text-purple-500 mb-2"></i>
+                        <h4 class="font-bold">Problem Solving</h4>
+                        <p class="text-sm text-gray-500">100+ DSA Problems</p>
+                    </div>
+                    <div class="p-4 bg-white dark:bg-gray-800 rounded-xl shadow-sm text-center">
+                        <i class="fas fa-video text-3xl text-pink-500 mb-2"></i>
+                        <h4 class="font-bold">Creative</h4>
+                        <p class="text-sm text-gray-500">Video & Motion FX</p>
+                    </div>
+                    <div class="p-4 bg-white dark:bg-gray-800 rounded-xl shadow-sm text-center">
+                        <i class="fas fa-trophy text-3xl text-yellow-500 mb-2"></i>
+                        <h4 class="font-bold">Hackathon</h4>
+                        <p class="text-sm text-gray-500">5th Position (Coding Ninja)</p>
+                    </div>
+                    <div class="p-4 bg-white dark:bg-gray-800 rounded-xl shadow-sm text-center">
+                        <i class="fas fa-graduation-cap text-3xl text-green-500 mb-2"></i>
+                        <h4 class="font-bold">Education</h4>
+                        <p class="text-sm text-gray-500">LPU (CSE)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills" class="py-20 bg-gray-100 dark:bg-[#151e32]">
+        <div class="max-w-6xl mx-auto px-4">
+            <h2 class="text-3xl font-bold mb-12 text-center">Technical <span class="text-primary">Arsenal</span></h2>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
+                <div class="glass-card p-4 rounded-xl flex flex-col items-center justify-center gap-2 hover:bg-white dark:hover:bg-gray-700">
+                    <i class="fab fa-java text-4xl text-red-500"></i>
+                    <span class="font-medium">Java</span>
+                </div>
+                <div class="glass-card p-4 rounded-xl flex flex-col items-center justify-center gap-2 hover:bg-white dark:hover:bg-gray-700">
+                    <i class="fab fa-python text-4xl text-blue-500"></i>
+                    <span class="font-medium">Python</span>
+                </div>
+                <div class="glass-card p-4 rounded-xl flex flex-col items-center justify-center gap-2 hover:bg-white dark:hover:bg-gray-700">
+                    <span class="text-4xl font-bold text-blue-600">C++</span>
+                    <span class="font-medium">C++</span>
+                </div>
+                <div class="glass-card p-4 rounded-xl flex flex-col items-center justify-center gap-2 hover:bg-white dark:hover:bg-gray-700">
+                    <i class="fab fa-js text-4xl text-yellow-400"></i>
+                    <span class="font-medium">JavaScript</span>
+                </div>
+                <div class="glass-card p-4 rounded-xl flex flex-col items-center justify-center gap-2 hover:bg-white dark:hover:bg-gray-700">
+                    <i class="fas fa-database text-4xl text-green-500"></i>
+                    <span class="font-medium">SQL / Mongo</span>
+                </div>
+                <div class="glass-card p-4 rounded-xl flex flex-col items-center justify-center gap-2 hover:bg-white dark:hover:bg-gray-700">
+                    <i class="fab fa-html5 text-4xl text-orange-500"></i>
+                    <span class="font-medium">HTML/CSS</span>
+                </div>
+                <div class="glass-card p-4 rounded-xl flex flex-col items-center justify-center gap-2 hover:bg-white dark:hover:bg-gray-700">
+                    <i class="fab fa-git-alt text-4xl text-red-600"></i>
+                    <span class="font-medium">Git & GitHub</span>
+                </div>
+                <div class="glass-card p-4 rounded-xl flex flex-col items-center justify-center gap-2 hover:bg-white dark:hover:bg-gray-700">
+                    <i class="fab fa-node text-4xl text-green-600"></i>
+                    <span class="font-medium">Node.js</span>
+                </div>
+                <div class="glass-card p-4 rounded-xl flex flex-col items-center justify-center gap-2 hover:bg-white dark:hover:bg-gray-700">
+                    <i class="fas fa-rocket text-4xl text-orange-400"></i>
+                    <span class="font-medium">Postman</span>
+                </div>
+                <div class="glass-card p-4 rounded-xl flex flex-col items-center justify-center gap-2 hover:bg-white dark:hover:bg-gray-700">
+                    <i class="fas fa-cube text-4xl text-orange-600"></i>
+                    <span class="font-medium">Blender</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="py-20 px-4">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl font-bold mb-12 text-center">Featured <span class="text-primary">Projects</span></h2>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="glass-card rounded-2xl overflow-hidden group">
+                    <div class="h-48 bg-gradient-to-br from-blue-900 to-slate-900 flex items-center justify-center relative overflow-hidden">
+                        <i class="fas fa-file-zipper text-6xl text-white/80 group-hover:scale-110 transition duration-500"></i>
+                        <div class="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition"></div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold mb-2">File Compression AI App</h3>
+                        <p class="text-sm text-primary mb-4 font-mono">HTML | Node.js | Python | ML APIs</p>
+                        <ul class="text-gray-600 dark:text-gray-300 space-y-2 mb-6 text-sm">
+                            <li><i class="fas fa-check-circle text-green-500 mr-2"></i>Developed an AI-powered web app with real-time predictions.</li>
+                            <li><i class="fas fa-check-circle text-green-500 mr-2"></i>Implemented ML models to automate user insights.</li>
+                            <li><i class="fas fa-check-circle text-green-500 mr-2"></i>Ensured 100% data recovery and integrity during decompression.</li>
+                            <li><i class="fas fa-check-circle text-green-500 mr-2"></i>Improved interaction flow by 70% with React.js frontend.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="glass-card rounded-2xl overflow-hidden group">
+                    <div class="h-48 bg-gradient-to-br from-purple-900 to-pink-900 flex items-center justify-center relative overflow-hidden">
+                        <i class="fas fa-photo-film text-6xl text-white/80 group-hover:scale-110 transition duration-500"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold mb-2">Portfolio Website (Multimedia)</h3>
+                        <p class="text-sm text-primary mb-4 font-mono">Premiere Pro | After Effects | Blender</p>
+                        <ul class="text-gray-600 dark:text-gray-300 space-y-2 mb-6 text-sm">
+                            <li><i class="fas fa-check-circle text-green-500 mr-2"></i>Produced high-quality video projects, improving viewer retention by 60%.</li>
+                            <li><i class="fas fa-check-circle text-green-500 mr-2"></i>Applied advanced motion graphics enhancing storytelling by 75%.</li>
+                            <li><i class="fas fa-check-circle text-green-500 mr-2"></i>Optimized video workflows, reducing editing time by 40%.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 bg-gray-100 dark:bg-[#151e32] px-4">
+        <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12">
+            
+            <div>
+                <h3 class="text-2xl font-bold mb-6 flex items-center gap-2"><i class="fas fa-graduation-cap text-primary"></i> Education & Training</h3>
+                <div class="border-l-4 border-primary ml-3 space-y-8 pl-8">
+                    <div class="relative">
+                        <div class="absolute -left-[41px] bg-primary rounded-full w-5 h-5 border-4 border-white dark:border-darkBg"></div>
+                        <h4 class="font-bold text-lg">PEP Program (Advance DSA)</h4>
+                        <p class="text-sm text-gray-500">byteXL | Jun '25 - Jul '25</p>
+                        <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">Solved 100+ optimization problems. Developed Huffman Encoding project achieving 40-60% compression.</p>
+                    </div>
+                    <div class="relative">
+                        <div class="absolute -left-[41px] bg-primary rounded-full w-5 h-5 border-4 border-white dark:border-darkBg"></div>
+                        <h4 class="font-bold text-lg">Graph Camp (Advance DSA)</h4>
+                        <p class="text-sm text-gray-500">Algo University | Jul '25</p>
+                        <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">Intensive 3-day camp on Graph algorithms (BFS/DFS, Shortest paths).</p>
+                    </div>
+                    <div class="relative">
+                        <div class="absolute -left-[41px] bg-gray-400 rounded-full w-5 h-5 border-4 border-white dark:border-darkBg"></div>
+                        <h4 class="font-bold text-lg">Lovely Professional University</h4>
+                        <p class="text-sm text-gray-500">B.Tech CSE | Aug '23 - Present</p>
+                        <p class="text-sm">CGPA: 5.24</p>
+                    </div>
+                    <div class="relative">
+                        <div class="absolute -left-[41px] bg-gray-400 rounded-full w-5 h-5 border-4 border-white dark:border-darkBg"></div>
+                        <h4 class="font-bold text-lg">GD Goenka Public School</h4>
+                        <p class="text-sm text-gray-500">Intermediate (PCM) | Apr '21 - Mar '22</p>
+                        <p class="text-sm">Percentage: 86%</p>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h3 class="text-2xl font-bold mb-6 flex items-center gap-2"><i class="fas fa-certificate text-yellow-500"></i> Certificates & Achievements</h3>
+                
+                <div class="space-y-4">
+                    <div class="glass-card p-5 rounded-xl border-l-4 border-yellow-500">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h4 class="font-bold">5th Position - Coding Ninja Hackathon</h4>
+                                <p class="text-sm text-gray-500">Nov 2025</p>
+                            </div>
+                            <i class="fas fa-trophy text-yellow-500 text-xl"></i>
+                        </div>
+                    </div>
+
+                    <div class="glass-card p-5 rounded-xl border-l-4 border-blue-500">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h4 class="font-bold">Python Concurrent Programming</h4>
+                                <p class="text-sm text-gray-500">Infosys | Dec '24</p>
+                                <p class="text-xs text-gray-400 mt-1">Topic: Multiprocessing in Python</p>
+                            </div>
+                            <i class="fas fa-scroll text-blue-500 text-xl"></i>
+                        </div>
+                        <a href="#" class="mt-3 inline-block text-xs font-semibold text-primary hover:underline">View Certificate &rarr;</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="py-20 px-4">
+        <div class="max-w-4xl mx-auto glass-card rounded-2xl p-8 md:p-12 shadow-2xl">
+            <h2 class="text-3xl font-bold mb-8 text-center">Get In <span class="text-primary">Touch</span></h2>
+            
+            <div class="grid md:grid-cols-2 gap-10">
+                <div class="space-y-6">
+                    <p class="text-gray-600 dark:text-gray-300">
+                        Feel free to reach out for collaborations or just a friendly hello!
+                    </p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <span>+91 9264276254</span>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <span>adityaaman9264@gmail.com</span>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <span>Phagwara, Punjab, India</span>
+                    </div>
+                </div>
+
+                <form id="contactForm" class="space-y-4">
+                    <div>
+                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your Name</label>
+                        <input type="text" id="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary focus:border-primary block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" placeholder="Name..." required>
+                    </div>
+                    <div>
+                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your Email</label>
+                        <input type="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary focus:border-primary block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" placeholder="mail@gmail.com" required>
+                    </div>
+                    <div>
+                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Message</label>
+                        <textarea id="message" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary focus:border-primary dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" placeholder="Leave a comment..." required></textarea>
+                    </div>
+                    <button type="submit" class="w-full text-white bg-primary hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary dark:hover:bg-blue-600 dark:focus:ring-blue-800 transition">Send Message</button>
+                    <p id="formStatus" class="text-sm text-green-500 hidden text-center">Message saved to LocalStorage!</p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-white rounded-lg shadow dark:bg-gray-900 m-4">
+        <div class="w-full max-w-screen-xl mx-auto p-4 md:py-8">
+            <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
+            <span class="block text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2026 <a href="#" class="hover:underline">Aditya Aman</a>. All Rights Reserved.</span>
+        </div>
+    </footer>
+
+    <script>
+        // --- 1. Theme Toggle Logic ---
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+        const html = document.documentElement;
+
+        // Check local storage or system preference
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            html.classList.add('dark');
+            themeIcon.classList.remove('fa-moon');
+            themeIcon.classList.add('fa-sun');
+        } else {
+            html.classList.remove('dark');
+            themeIcon.classList.remove('fa-sun');
+            themeIcon.classList.add('fa-moon');
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                localStorage.theme = 'light';
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            } else {
+                html.classList.add('dark');
+                localStorage.theme = 'dark';
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            }
+        });
+
+        // --- 2. Mobile Menu Logic ---
+        const menuBtn = document.querySelector('[data-collapse-toggle="navbar-sticky"]');
+        const menu = document.getElementById('navbar-sticky');
+        menuBtn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+
+        // --- 3. Dynamic Canvas Background (Mouse Follower + Gradient) ---
+        const canvas = document.getElementById('canvas-bg');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let mouse = { x: 0, y: 0 };
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+        });
+
+        // Create some floating "orbs"
+        const orbs = [];
+        for(let i=0; i<5; i++) {
+            orbs.push({
+                x: Math.random() * width,
+                y: Math.random() * height,
+                vx: (Math.random() - 0.5) * 1,
+                vy: (Math.random() - 0.5) * 1,
+                radius: 100 + Math.random() * 200,
+                color: `hsla(${Math.random() * 360}, 70%, 60%, 0.1)`
+            });
+        }
+
+        function animate() {
+            // Determine background base color based on theme
+            const isDark = html.classList.contains('dark');
+            ctx.clearRect(0, 0, width, height);
+            
+            // Base background
+            // We do not fill rect so CSS bg shows through, we only draw lights
+            
+            // Draw Orbs
+            orbs.forEach(orb => {
+                orb.x += orb.vx;
+                orb.y += orb.vy;
+
+                // Bounce
+                if(orb.x < 0 || orb.x > width) orb.vx *= -1;
+                if(orb.y < 0 || orb.y > height) orb.vy *= -1;
+
+                const gradient = ctx.createRadialGradient(orb.x, orb.y, 0, orb.x, orb.y, orb.radius);
+                gradient.addColorStop(0, isDark ? 'rgba(59, 130, 246, 0.15)' : 'rgba(59, 130, 246, 0.1)'); 
+                gradient.addColorStop(1, 'rgba(0,0,0,0)');
+
+                ctx.fillStyle = gradient;
+                ctx.beginPath();
+                ctx.arc(orb.x, orb.y, orb.radius, 0, Math.PI * 2);
+                ctx.fill();
+            });
+
+            // Mouse follower Spotlight
+            const mouseGradient = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 400);
+            mouseGradient.addColorStop(0, isDark ? 'rgba(16, 185, 129, 0.15)' : 'rgba(16, 185, 129, 0.1)'); // Green tint
+            mouseGradient.addColorStop(1, 'rgba(0,0,0,0)');
+            
+            ctx.fillStyle = mouseGradient;
+            ctx.beginPath();
+            ctx.arc(mouse.x, mouse.y, 400, 0, Math.PI * 2);
+            ctx.fill();
+
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        // --- 4. LocalStorage Form Saving ---
+        const form = document.getElementById('contactForm');
+        const statusMsg = document.getElementById('formStatus');
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                message: document.getElementById('message').value,
+                date: new Date().toISOString()
+            };
+
+            // Get existing data
+            let storedMessages = JSON.parse(localStorage.getItem('portfolioMessages')) || [];
+            storedMessages.push(formData);
+            
+            // Save back
+            localStorage.setItem('portfolioMessages', JSON.stringify(storedMessages, null, 2));
+
+            // UI Feedback
+            statusMsg.classList.remove('hidden');
+            form.reset();
+            
+            // Log to console for verification
+            console.log("Message saved to LocalStorage:", formData);
+            
+            setTimeout(() => {
+                statusMsg.classList.add('hidden');
+            }, 3000);
+        });
+    </script>
+</body>
+</html>
