@@ -10,8 +10,14 @@ Route::get('/about',function(){
     return "This is About";
 });
 
-Route::get("display/{first}/{last?}",function($first,$last = "NA"){
-    return "First Name: $first, Last Name: $last ";
+Route::get("/name/{person_name}",function($person_name){
+    return $person_name;
+});
+
+Route::get("display/{first}/{last?}",function($first,$last =null){
+
+    // return "First Name: $first, Last Name: $last ";
+    return $first.$last ;
 });
 
 Route::get("/",function(){
@@ -21,6 +27,11 @@ Route::get("/",function(){
 Route::get("/data",function(){
     $name = "Shivang";
     return view("databyarray",["name" =>$name]);
+});
+
+
+Route::get("/home",function(){
+    return view("home");
 });
 
 
