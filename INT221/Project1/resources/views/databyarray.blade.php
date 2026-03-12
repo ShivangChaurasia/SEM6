@@ -7,5 +7,6 @@
 </head>
 <body>
     User Name: {{$name}}
+    City : {{$city}}
 </body>
 </html>
