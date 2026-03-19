@@ -196,6 +196,12 @@ Route::get("admin/product/home",function(){
 });
 
 
+use App\Http\Controllers\ProductController;
+
+Route::get("/firstController",[ProductController::class, "index"]);
+Route::get("/firstController",[ProductController::class, "about"]);
+
+
 
 
 
