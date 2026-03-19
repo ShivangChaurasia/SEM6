@@ -181,7 +181,7 @@ Route::get("/name/teacher/index",function(){
 
 
 Route::get("/name/other/index",function(){
-    return view("other");
+    return view("others");
 })->name("oi");
 
 

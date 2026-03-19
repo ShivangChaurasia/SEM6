@@ -10,9 +10,9 @@
 
     </div>
     <h1>This is Teacher dashboard</h1>
-    <a href="{{ route('si')}}>Student</a>
-    <a href="{{ route('ti')}}>Teacher</a>
-    <a href="{{ route('oi')}}>Others</a>
+    <a href="{{ route('si') }}">Student</a>
+    <a href="{{ route('ti') }}">Teacher</a>
+    <a href="{{ route('oi') }}">Others</a>
 </body>
 </html>
 
