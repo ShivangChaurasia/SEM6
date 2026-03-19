@@ -160,14 +160,40 @@ Route::get("listPage", function(){
 
 // 19/03/26------------------------------------
 
-Route::get("/para/{name?}",function($name="NA"){
-    return "My name is $name";
+Route::get("jsondata/", function(){
+    return response()->json(["Name"=>"Submit", "Course"=>["Laravel", "python", "Java"], "city"=>"Jalandhar"]);
 });
 
 
 
+Route::get("setcookiedata",function(){
+    return response("cookie Set")->cookie("username", "Laravel2", 60);
+});
+
+Route::get("/name/student/index",function(){
+    return view("student");
+})->name("si");
 
 
+Route::get("/name/teacher/index",function(){
+    return view("teacher");
+})->name("ti");
+
+
+Route::get("/name/other/index",function(){
+    return view("other");
+})->name("oi");
+
+
+
+Route::get("admin/product/index",function(){
+    return "this is product home page";
+})->name("op");
+
+
+Route::get("admin/product/home",function(){
+    return redirect()->route("op");
+});
 
 
 
