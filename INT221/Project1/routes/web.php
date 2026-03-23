@@ -219,6 +219,16 @@ Route::get('/course-eligibility/{age}', function ($age) {
 
 
 
+// Route protected by CourseCheck middleware
+
+Route::get('/countrycheck',function(Request $request){
+    return $request->age;
+})->middleware(\App\Http\Middleware\CountryCheck::class);
+
+Route::get('coursecheck/{age}', function($age){
+    return $age;
+})->middleware(\App\Http\Middleware\CountryCheck::class);
+
 
 
 
