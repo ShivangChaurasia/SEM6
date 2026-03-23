@@ -15,4 +15,12 @@ class ProductController extends Controller
         return "This is about in ProductController";
     }
 
+    function viewFile(){
+        $name = "Amit Kumar";
+        $city = "Jalandhar";
+        $course = "Laravel";
+
+        return view("data2", compact("name","city","course"));
+    }
+
 }
