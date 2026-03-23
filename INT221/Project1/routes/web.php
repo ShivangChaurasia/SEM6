@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 // Route::get('/', function () {
@@ -196,10 +197,28 @@ Route::get("admin/product/home",function(){
 });
 
 
+
+
 use App\Http\Controllers\ProductController;
 
 Route::get("/firstController",[ProductController::class, "index"]);
 Route::get("/firstController",[ProductController::class, "about"]);
+
+
+
+// middleware
+
+// Route protected by CourseCheck middleware
+Route::get('/course-eligibility', function (Request $request) {
+    return "Eligible access granted (age: {$request->age})";
+})->middleware(\App\Http\Middleware\CourseCheck::class);
+
+Route::get('/course-eligibility/{age}', function ($age) {
+    return "Eligible access granted (age: $age)";
+})->middleware(\App\Http\Middleware\CourseCheck::class);
+
+
+
 
 
 
