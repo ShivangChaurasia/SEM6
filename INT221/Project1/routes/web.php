@@ -25,6 +25,9 @@ Route::get("/student",function(){
     return view("student");
 });
 
+
+
+
 // Route::get("/data",function(){
 //     $name = "Shivang";
 //     $city = "Jalandhar";
@@ -239,9 +242,13 @@ Route::get('/image', function() {
 
 
 
-Route::get("studenthome/{name}",function($name="NA"){
-    return view('studenthome', compact("name"));
-});
+// Route::get("studenthome/{name}",function($name="NA"){
+//     return view('studenthome', compact("name"));
+// });
 
 
+use App\Http\Controllers\bladeController;
+
+
+Route::get('/studenthome/{name?}', [bladeController::class, 'index'])->name('studenthome');
 
