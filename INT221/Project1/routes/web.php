@@ -233,18 +233,14 @@ Route::get('coursecheck/{age}', function($age){
 
 // Route to display a simple image
 
-Route::get('/display-image/{imageName}', function($imageName) {
-    $path = public_path('images/' . $imageName);
-
-    if (file_exists($path)) {
-        return response()->file($path);
-    }
-
-    return abort(404, 'Image not found');
-});
-
 Route::get('/image', function() {
     return view('image');
+});
+
+
+
+Route::get("studenthome/{name}",function($name="NA"){
+    return view('studenthome', compact("name"));
 });
 
 
