@@ -18,4 +18,18 @@ class bladeController extends Controller
         $num = 5;
         return view('studentabout',compact('num'));
     }
+
+    function data(){
+        $studentdata=[
+            ["Name"=>"Amit","Courses"=>"Python","City"=>"Jalandhar"],
+            ["Name"=>"Amit","Courses"=>"Python","City"=>"Jalandhar"],
+            ["Name"=>"Amit","Courses"=>"Python","City"=>"Jalandhar"],
+            ["Name"=>"Amit","Courses"=>"Python","City"=>"Jalandhar"],
+            ["Name"=>"Amit","Courses"=>"Python","City"=>"Jalandhar"],
+            ["Name"=>"Amit","Courses"=>"Python","City"=>"Jalandhar"],
+        ];
+
+        return view("aboutpage",compact("studentdata"));
+
+    }
 }
