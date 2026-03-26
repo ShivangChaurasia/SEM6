@@ -12,4 +12,10 @@ class bladeController extends Controller
         $num = 10;
         return view('studenthome', compact('studentname','num'));
     }
+
+
+    function about(){
+        $num = 5;
+        return view('studentabout',compact('num'));
+    }
 }
