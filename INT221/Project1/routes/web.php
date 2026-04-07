@@ -252,4 +252,3 @@ use App\Http\Controllers\bladeController;
 
 Route::get('/studenthome/{name?}', [bladeController::class, 'index'])->name('studenthome');
 Route::get('/studentabout',[bladeController::class,'about']);
- 
