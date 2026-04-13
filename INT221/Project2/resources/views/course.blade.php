@@ -11,6 +11,15 @@
         <h2>Gender</h2>
         <label><input type="radio" name="gender" value="Male" required> Male</label>
         <label><input type="radio" name="gender" value="Female"> Female</label>
+
+        <br>
+
+        <select name="city">
+            <option value="Phagwara">Phagwara</option>
+            <option value="Jalandhar">Jalandhar</option>
+            <option value="Lucknow">Lucknow</option>
+            <option value="London">London</option>
+        </select>
     </fieldset>
 
     <button type="submit">Submit</button>

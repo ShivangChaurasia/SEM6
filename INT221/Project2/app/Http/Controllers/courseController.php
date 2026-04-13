@@ -8,15 +8,12 @@ class courseController extends Controller
 {
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'skill' => 'sometimes|array',
-            'skill.*' => 'string',
-            'gender' => 'required|string|in:Male,Female',
-        ]);
+        $skills = $request->input("skill");
+        $gender = $request->input("gender");
+        $city = $request->input("city");
 
-        return view('coursedetails', [
-            'skills' => $validated['skill'] ?? [],
-            'gender' => $validated['gender'],
-        ]);
+        return view('coursedetails', compact(
+            'skills','gender','city'
+        ));
     }
 }

@@ -14,5 +14,8 @@
         </ul>
     <h2>Gender</h2>
     <p>{{ $gender }}</p>
+
+    <h2>City</h2>
+    <p>{{$city}}</p>
 </body>
 </html>
