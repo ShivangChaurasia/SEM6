@@ -1,13 +1,17 @@
 <?php
 
+use App\Http\Controllers\courseController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('form');
 });
 
-
-Route::post('/user',function(){
-    $name = request('name');
+Route::get('/course', function () {
+    return view('course');
 });
 
+Route::post('/user', [UserController::class, 'store']);
+
+Route::post('/course', [courseController::class, 'store']);
