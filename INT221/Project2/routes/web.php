@@ -28,3 +28,17 @@ Route::post('/course', [courseController::class, 'store']);
 // Localization-----------------------------------------------------------------------
 
 
+
+
+
+
+
+
+
+// 20th Apr; File Upload
+
+use App\Http\Controllers\ImageController;
+
+Route::get('file', [ImageController::class, 'show']);
+Route::post('upload', [ImageController::class, 'store']);
+
