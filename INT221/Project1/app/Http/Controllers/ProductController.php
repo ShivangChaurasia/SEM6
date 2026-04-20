@@ -1,0 +1,26 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+class ProductController extends Controller
+{
+    //
+    function index(){
+        return "This is ProductController index";
+    }
+
+    function about(){
+        return "This is about in ProductController";
+    }
+
+    function viewFile(){
+        $name = "Amit Kumar";
+        $city = "Jalandhar";
+        $course = "Laravel";
+
+        return view("data2", compact("name","city","course"));
+    }
+
+}

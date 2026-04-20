@@ -3,21 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Student</title>
 </head>
 <body>
+    <div>
 
-    <h1>This is Student Page</h1>
-    <h3>Lets Play!!!!!!!!!!!!!!!!!!!!!</h3>
-
-
+    </div>
+    <h1>This is student dashboard</h1>
+    <a href="{{ route('si') }}">Student</a>
+    <a href="{{ route('ti') }}">Teacher</a>
+    <a href="{{ route('oi') }}">Others</a>
 </body>
 </html>
-
-
-
-
-
-
-
 
