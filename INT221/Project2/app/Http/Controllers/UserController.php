@@ -11,12 +11,18 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
             'message' => 'required|string',
         ], ['email.required' => 'Enter Email, It is compulsory!']);
 
-        return view('user', $validated);
+        $name = $request->input("name");
+        $course = $request->input("course");
+        $email = $request->input("email");
+        $phone = $request->input("phone");
+        $btn = $request->input("btn");
+
+        return view('user', compact("name","course","email", "phone", "btn"));
     }
 }
