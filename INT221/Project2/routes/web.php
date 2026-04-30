@@ -25,7 +25,7 @@ Route::post('/course', [courseController::class, 'store']);
 
 
 
-// Localization-----------------------------------------------------------------------
+
 
 
 
@@ -41,4 +41,7 @@ use App\Http\Controllers\ImageController;
 
 Route::get('file', [ImageController::class, 'show']);
 Route::post('upload', [ImageController::class, 'store']);
+
+
+
 
