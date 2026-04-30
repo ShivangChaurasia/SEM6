@@ -30,5 +30,7 @@ Route::get('pub', function () {
 
 use App\Http\Controllers\formController;
 
-Route::get('show',[formController::class,"show"]);
-Route::get('submit',[formController::class,"submit"]);
+Route::get('/show',[formController::class,"show"]);
+Route::post('/submit',[formController::class,"submit"]);
+
+

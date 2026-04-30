@@ -1,5 +1,5 @@
-<form method="post" action="submit" enctype="multipart/form-data">
+<form method="post" action="/submit" enctype="multipart/form-data">
     @csrf
-    <input type="file">
-    <input type="submit">
+    <input type="file" name="file" required>
+    <input type="submit" value="Upload">
 </form>
