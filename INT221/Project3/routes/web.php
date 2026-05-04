@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\TestMail;
 
 Route::get('/', function () {
     app()->setLocale(config('app.locale'));
@@ -25,6 +27,11 @@ Route::get('guj', function () {
 Route::get('pub', function () {
     app()->setLocale('pub');
     return view('welcome');
+});
+
+Route::get('/send-mail', function () {
+    Mail::to('recipient@example.com')->send(new TestMail());
+    return 'Mail sent!';
 });
 
 
