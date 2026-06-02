@@ -36,8 +36,12 @@ Route::get('/send-mail', function () {
 
 
 use App\Http\Controllers\formController;
+use App\Http\Controllers\StudentController;
 
 Route::get('/show',[formController::class,"show"]);
 Route::post('/submit',[formController::class,"submit"]);
+
+Route::get('/students/create', [StudentController::class, 'create']);
+Route::post('/students', [StudentController::class, 'store']);
 
 
