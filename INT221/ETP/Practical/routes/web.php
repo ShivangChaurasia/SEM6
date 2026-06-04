@@ -12,6 +12,9 @@ Route::get('/', function () {
 use App\Http\Controllers\ProfileController;
 
 Route::get('/profile/{username}', [ProfileController::class, 'display'])
-    ->name('profile.show');
+->name('profile.show');
+
+
+
 
 
